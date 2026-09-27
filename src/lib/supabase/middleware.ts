@@ -40,6 +40,8 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith("/login") || pathname.startsWith("/register");
   const isPublicAsset =
     pathname === "/manifest.webmanifest" ||
+    pathname === "/sw.js" ||
+    pathname === "/offline.html" ||
     pathname.startsWith("/icons/") ||
     pathname.startsWith("/brand/") ||
     pathname.startsWith("/branding/") ||

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#6B3418" />
+    <title>Zeloo — Offline</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #fffdf8;
+        --fg: #2b160c;
+        --muted: #7a5a45;
+        --primary: #6b3418;
+        --card: #fff1d2;
+        --border: #e7d3bb;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        font-family: "DM Sans", "Segoe UI", sans-serif;
+        color: var(--fg);
+        background:
+          radial-gradient(ellipse at 70% 20%, #fff1d2aa 0%, transparent 55%),
+          radial-gradient(ellipse at 10% 80%, #e7d3bb66 0%, transparent 45%),
+          var(--bg);
+      }
+      main {
+        width: min(100%, 420px);
+        text-align: center;
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.88);
+        padding: 28px 22px;
+        box-shadow: 0 12px 36px rgba(43, 22, 12, 0.06);
+      }
+      img {
+        width: min(180px, 70vw);
+        height: auto;
+        margin: 0 auto 12px;
+        display: block;
+      }
+      h1 {
+        margin: 0;
+        font-family: Fraunces, Georgia, serif;
+        font-size: 1.75rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        line-height: 1.5;
+        font-size: 0.98rem;
+      }
+      button {
+        margin-top: 22px;
+        appearance: none;
+        border: 0;
+        border-radius: 12px;
+        background: var(--primary);
+        color: #fffdf8;
+        font: inherit;
+        font-weight: 600;
+        padding: 12px 18px;
+        cursor: pointer;
+      }
+      button:hover {
+        filter: brightness(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/branding/zeloo-mascot.png" alt="Mascote Zeloo" width="180" height="180" />
+      <h1>Você está offline</h1>
+      <p>
+        As telas que você já visitou podem continuar disponíveis. Quando a
+        conexão voltar, o Zeloo sincroniza os dados automaticamente.
+      </p>
+      <button type="button" onclick="location.reload()">Tentar de novo</button>
+    </main>
+    <script>
+      window.addEventListener("online", function () {
+        location.reload();
+      });
+    </script>
+  </body>
+</html>

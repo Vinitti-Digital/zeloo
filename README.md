@@ -111,11 +111,11 @@ npm run typecheck
 - [x] Visualização do histórico de atividades do grupo (`activity_logs` + RLS)
 - [x] Filtros básicos por tipo e período (via `searchParams` na página do grupo)
 
-### 9. PWA offline — pendente (depois)
+### 9. PWA offline — concluída
 
-- [ ] Service worker
-- [ ] Cache offline das telas principais
-- [ ] Estratégia de sync quando voltar a conexão
+- [x] Service worker (`public/sw.js`) com precache de shell/assets e runtime cache
+- [x] Cache offline das telas principais (network-first + fallback `/offline.html`)
+- [x] Estratégia de sync ao reconectar (banner offline + `router.refresh()` + toast)
 
 ## Convenções
 
@@ -127,5 +127,5 @@ npm run typecheck
 
 ## Status atual
 
-**Etapa ativa:** 9 — PWA offline  
+**Etapa ativa:** concluída (roadmap 1–9)  
 **Última atualização do roadmap:** 2026-09-27
