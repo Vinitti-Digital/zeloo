@@ -85,23 +85,26 @@ npm run typecheck
 - [x] CRUD de grupos de manutenção dentro de um grupo de usuários
 - [x] Controle de acesso alinhado às políticas RLS (membros criam/editam; Proprietário exclui)
 
-### 5. Serviços — pendente
+### 5. Serviços — concluída
 
-- [ ] CRUD de serviços
-- [ ] Criação de execução pontual (avulsa)
+- [x] RPCs: `create_service`, `update_service`, `delete_service`, `create_one_off_execution`
+- [x] CRUD de serviços em `/groups/[id]/maintenance/[maintenanceGroupId]`
+- [x] Criação de execução pontual (avulsa) no detalhe do serviço
 
-### 6. Rotinas — pendente
+### 6. Rotinas — concluída
 
-- [ ] CRUD de rotinas de serviço
-- [ ] Preview da primeira ocorrência
-- [ ] Recálculo de execuções futuras via RPC existente
+- [x] RPC: `create_service_routine`, `delete_service_routine` (+ `update_service_routine` existente)
+- [x] CRUD de rotinas de serviço (1 rotina por serviço)
+- [x] Preview da próxima ocorrência via `compute_next_occurrence`
+- [x] Recálculo de execuções futuras (respeita `is_active`)
 
-### 7. Execuções — pendente
+### 7. Execuções — concluída
 
-- [ ] Listar execuções (por grupo / serviço / período)
-- [ ] Concluir execução
-- [ ] Reagendar execução
-- [ ] Cancelar execução
+- [x] RPCs: `complete_execution`, `cancel_execution`, `reschedule_execution`
+- [x] Listar execuções no detalhe do serviço (pendentes + histórico)
+- [x] Concluir execução
+- [x] Reagendar execução
+- [x] Cancelar execução
 
 ### 8. Activity log — pendente
 
@@ -124,5 +127,5 @@ npm run typecheck
 
 ## Status atual
 
-**Etapa ativa:** 5 — Serviços  
+**Etapa ativa:** 8 — Activity log  
 **Última atualização do roadmap:** 2026-09-27

@@ -157,6 +157,7 @@ export type Database = {
           cancel_reason: string | null;
           actual_cost: number | null;
           notes: string | null;
+          is_one_off: boolean;
           created_at: string;
           updated_at: string;
         };
@@ -175,6 +176,7 @@ export type Database = {
           cancel_reason?: string | null;
           actual_cost?: number | null;
           notes?: string | null;
+          is_one_off?: boolean;
           created_at?: string;
           updated_at?: string;
         };
@@ -312,9 +314,21 @@ export type Database = {
         Args: { p_invitation_id: string };
         Returns: Database["public"]["Tables"]["user_group_members"]["Row"];
       };
+      cancel_execution: {
+        Args: { p_execution_id: string; p_reason?: string };
+        Returns: Database["public"]["Tables"]["service_executions"]["Row"];
+      };
       cancel_invitation: {
         Args: { p_invitation_id: string };
         Returns: Database["public"]["Tables"]["invitations"]["Row"];
+      };
+      complete_execution: {
+        Args: {
+          p_execution_id: string;
+          p_actual_cost?: number;
+          p_notes?: string;
+        };
+        Returns: Database["public"]["Tables"]["service_executions"]["Row"];
       };
       create_invitation: {
         Args: { p_user_group_id: string; p_email: string };
@@ -328,6 +342,40 @@ export type Database = {
         };
         Returns: Database["public"]["Tables"]["maintenance_groups"]["Row"];
       };
+      create_one_off_execution: {
+        Args: {
+          p_service_id: string;
+          p_due_date: string;
+          p_notes?: string;
+        };
+        Returns: Database["public"]["Tables"]["service_executions"]["Row"];
+      };
+      create_service: {
+        Args: {
+          p_maintenance_group_id: string;
+          p_title: string;
+          p_description?: string;
+          p_priority?: Database["public"]["Enums"]["service_priority"];
+          p_responsible_user_id?: string;
+          p_location?: string;
+          p_estimated_cost?: number;
+          p_notes?: string;
+        };
+        Returns: Database["public"]["Tables"]["services"]["Row"];
+      };
+      create_service_routine: {
+        Args: {
+          p_service_id: string;
+          p_frequency: Database["public"]["Enums"]["routine_frequency"];
+          p_interval_value: number;
+          p_base_date: string;
+          p_end_date?: string;
+          p_weekdays?: number[];
+          p_month_day?: number;
+          p_is_active?: boolean;
+        };
+        Returns: Database["public"]["Tables"]["service_routines"]["Row"];
+      };
       create_user_group: {
         Args: { p_name: string; p_description?: string };
         Returns: Database["public"]["Tables"]["user_groups"]["Row"];
@@ -335,6 +383,36 @@ export type Database = {
       delete_maintenance_group: {
         Args: { p_maintenance_group_id: string };
         Returns: Database["public"]["Tables"]["maintenance_groups"]["Row"];
+      };
+      delete_service: {
+        Args: { p_service_id: string };
+        Returns: Database["public"]["Tables"]["services"]["Row"];
+      };
+      delete_service_routine: {
+        Args: { p_routine_id: string };
+        Returns: Database["public"]["Tables"]["service_routines"]["Row"];
+      };
+      reschedule_execution: {
+        Args: {
+          p_execution_id: string;
+          p_new_due_date: string;
+          p_reason?: string;
+        };
+        Returns: Database["public"]["Tables"]["service_executions"]["Row"];
+      };
+      update_service: {
+        Args: {
+          p_service_id: string;
+          p_title: string;
+          p_description?: string;
+          p_priority?: Database["public"]["Enums"]["service_priority"];
+          p_responsible_user_id?: string;
+          p_location?: string;
+          p_estimated_cost?: number;
+          p_notes?: string;
+          p_status?: Database["public"]["Enums"]["service_status"];
+        };
+        Returns: Database["public"]["Tables"]["services"]["Row"];
       };
       is_active_group_member: {
         Args: { p_user_group_id: string };

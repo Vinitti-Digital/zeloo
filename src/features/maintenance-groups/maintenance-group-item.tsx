@@ -1,7 +1,8 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { ChevronRight, Pencil, Trash2 } from "lucide-react";
 
 import {
   deleteMaintenanceGroupAction,
@@ -104,11 +105,14 @@ export function MaintenanceGroupItem({
 
   return (
     <div className="flex items-start justify-between gap-3 px-4 py-3.5 sm:px-5">
-      <div className="flex min-w-0 items-start gap-3">
+      <Link
+        href={`/groups/${userGroupId}/maintenance/${group.id}`}
+        className="flex min-w-0 flex-1 items-start gap-3 rounded-xl transition-colors hover:bg-[#FFF8EA]/60"
+      >
         <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-[#FFF1D2] font-[family-name:var(--font-display)] text-lg text-primary">
           {initial}
         </span>
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="truncate font-medium text-foreground">{group.name}</p>
           <p className="text-sm text-muted-foreground">
             {group.description || "Sem descrição"}
@@ -119,7 +123,8 @@ export function MaintenanceGroupItem({
             </Alert>
           ) : null}
         </div>
-      </div>
+        <ChevronRight className="mt-2 size-4 shrink-0 text-muted-foreground" />
+      </Link>
 
       <div className="flex shrink-0 items-center gap-1">
         <Button
