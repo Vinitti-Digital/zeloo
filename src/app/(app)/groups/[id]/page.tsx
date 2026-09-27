@@ -3,17 +3,32 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { ActivityLogPanel } from "@/features/activity/activity-log-panel";
 import { GroupInvitationsPanel } from "@/features/invitations/group-invitations-panel";
 import { MaintenanceGroupsPanel } from "@/features/maintenance-groups/maintenance-groups-panel";
+import {
+  activityPeriodStart,
+  parseActivityEntity,
+  parseActivityPeriod,
+} from "@/lib/activity/filters";
 import { formatJoinedDate, formatMemberRole } from "@/lib/i18n/labels";
 import { createClient } from "@/lib/supabase/server";
 
 type GroupPageProps = {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ entity?: string; period?: string }>;
 };
 
-export default async function GroupDetailPage({ params }: GroupPageProps) {
+export default async function GroupDetailPage({
+  params,
+  searchParams,
+}: GroupPageProps) {
   const { id } = await params;
+  const resolvedSearchParams = await searchParams;
+  const activityEntity = parseActivityEntity(resolvedSearchParams.entity);
+  const activityPeriod = parseActivityPeriod(resolvedSearchParams.period);
+  const periodStart = activityPeriodStart(activityPeriod);
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -43,8 +58,28 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
 
   const isOwner = membership.role === "OWNER";
 
-  const [{ data: members }, { data: invitations }, { data: maintenanceGroups }] =
-    await Promise.all([
+  let activityQuery = supabase
+    .from("activity_logs")
+    .select(
+      "id, entity_type, action, actor_display_name, metadata, created_at",
+    )
+    .eq("user_group_id", id)
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (activityEntity !== "ALL") {
+    activityQuery = activityQuery.eq("entity_type", activityEntity);
+  }
+  if (periodStart) {
+    activityQuery = activityQuery.gte("created_at", periodStart);
+  }
+
+  const [
+    { data: members },
+    { data: invitations },
+    { data: maintenanceGroups },
+    { data: activityLogs },
+  ] = await Promise.all([
       supabase
         .from("user_group_members")
         .select("id, role, status, joined_at, user_id")
@@ -76,6 +111,7 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
         .select("id, name, description")
         .eq("user_group_id", id)
         .order("created_at", { ascending: true }),
+      activityQuery,
     ]);
 
   const memberUserIds = (members ?? []).map((member) => member.user_id);
@@ -142,6 +178,21 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
         userGroupId={id}
         invitations={invitations ?? []}
         isOwner={isOwner}
+      />
+
+      <ActivityLogPanel
+        userGroupId={id}
+        logs={(activityLogs ?? []).map((log) => ({
+          ...log,
+          metadata:
+            log.metadata &&
+            typeof log.metadata === "object" &&
+            !Array.isArray(log.metadata)
+              ? (log.metadata as Record<string, unknown>)
+              : null,
+        }))}
+        entity={activityEntity}
+        period={activityPeriod}
       />
 
       <section className="animate-fade-up-delay space-y-3">
