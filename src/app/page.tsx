@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { BrandStack, BrandWordmark } from "@/components/brand/logo";
+import { BrandLogoFull, BrandMascot } from "@/components/brand/logo";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -13,19 +13,15 @@ export default function HomePage() {
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 py-14 sm:py-20">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] lg:gap-6">
           <div className="max-w-xl">
-            <div className="animate-fade-up flex justify-center lg:hidden">
-              <BrandStack width={200} priority />
-            </div>
-
-            <div className="animate-fade-up mt-6 hidden lg:block">
-              <BrandWordmark height={56} priority />
+            <div className="animate-fade-up flex justify-center lg:justify-start">
+              <BrandLogoFull width={210} priority />
             </div>
 
             <h1 className="animate-fade-up-delay mt-8 text-center font-[family-name:var(--font-display)] text-4xl leading-[1.1] tracking-tight text-foreground sm:text-5xl lg:text-left">
               A manutenção da casa, organizada em equipe.
             </h1>
 
-            <p className="animate-fade-up-delay-2 mt-4 mx-auto max-w-md text-center text-base leading-relaxed text-muted-foreground sm:text-lg lg:mx-0 lg:text-left">
+            <p className="animate-fade-up-delay-2 mx-auto mt-4 max-w-md text-center text-base leading-relaxed text-muted-foreground sm:text-lg lg:mx-0 lg:text-left">
               Crie grupos, acompanhe o que precisa ser feito e mantenha o
               histórico de tudo — no celular, com simplicidade.
             </p>
@@ -50,8 +46,8 @@ export default function HomePage() {
           </div>
 
           <div className="pointer-events-none relative hidden justify-center lg:flex">
-            <BrandStack
-              width={380}
+            <BrandMascot
+              width={360}
               priority
               className="animate-soft-float drop-shadow-[0_28px_50px_rgba(43,22,12,0.18)]"
             />

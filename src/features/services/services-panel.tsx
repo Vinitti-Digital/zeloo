@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ChevronRight, Wrench } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
+import { BrandMascot } from "@/components/brand/logo";
 import { Badge } from "@/components/ui/badge";
 import { CreateServiceForm } from "@/features/services/create-service-form";
 import {
@@ -91,8 +92,8 @@ export function ServicesPanel({
         </div>
       ) : (
         <div className="rounded-3xl border border-dashed border-primary/25 bg-white/70 px-5 py-8 text-center">
-          <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-2xl bg-[#FFF1D2] text-primary">
-            <Wrench className="size-5" />
+          <div className="mx-auto mb-3 flex justify-center">
+            <BrandMascot width={96} />
           </div>
           <p className="font-medium text-foreground">
             Nenhum serviço ainda

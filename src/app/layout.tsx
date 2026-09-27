@@ -15,7 +15,7 @@ const display = Fraunces({
 
 export const metadata: Metadata = {
   title: "Zeloo",
-  description: "Gestão colaborativa de manutenção e organização",
+  description: "Cuide, organize e mantenha tudo em ordem.",
   applicationName: "Zeloo",
   manifest: "/manifest.webmanifest",
   icons: {

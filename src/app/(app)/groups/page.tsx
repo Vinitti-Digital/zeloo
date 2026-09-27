@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ChevronRight, UsersRound } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
+import { BrandMascot } from "@/components/brand/logo";
 import { Badge } from "@/components/ui/badge";
 import { MyPendingInvitations } from "@/features/invitations/my-pending-invitations";
 import { CreateUserGroupForm } from "@/features/user-groups/create-user-group-form";
@@ -144,8 +145,8 @@ export default async function GroupsPage() {
           </div>
         ) : (
           <div className="rounded-3xl border border-dashed border-primary/25 bg-white/70 px-5 py-10 text-center">
-            <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-[#FFF1D2] text-primary">
-              <UsersRound className="size-7" />
+            <div className="mx-auto mb-4 flex justify-center">
+              <BrandMascot width={112} />
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
               Crie seu primeiro grupo
