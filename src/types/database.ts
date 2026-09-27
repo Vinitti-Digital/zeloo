@@ -308,9 +308,33 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      accept_invitation: {
+        Args: { p_invitation_id: string };
+        Returns: Database["public"]["Tables"]["user_group_members"]["Row"];
+      };
+      cancel_invitation: {
+        Args: { p_invitation_id: string };
+        Returns: Database["public"]["Tables"]["invitations"]["Row"];
+      };
+      create_invitation: {
+        Args: { p_user_group_id: string; p_email: string };
+        Returns: Database["public"]["Tables"]["invitations"]["Row"];
+      };
+      create_maintenance_group: {
+        Args: {
+          p_user_group_id: string;
+          p_name: string;
+          p_description?: string;
+        };
+        Returns: Database["public"]["Tables"]["maintenance_groups"]["Row"];
+      };
       create_user_group: {
         Args: { p_name: string; p_description?: string };
         Returns: Database["public"]["Tables"]["user_groups"]["Row"];
+      };
+      delete_maintenance_group: {
+        Args: { p_maintenance_group_id: string };
+        Returns: Database["public"]["Tables"]["maintenance_groups"]["Row"];
       };
       is_active_group_member: {
         Args: { p_user_group_id: string };
@@ -327,6 +351,14 @@ export type Database = {
       remove_group_member: {
         Args: { p_user_group_id: string; p_member_user_id: string };
         Returns: Database["public"]["Tables"]["user_group_members"]["Row"];
+      };
+      update_maintenance_group: {
+        Args: {
+          p_maintenance_group_id: string;
+          p_name: string;
+          p_description?: string;
+        };
+        Returns: Database["public"]["Tables"]["maintenance_groups"]["Row"];
       };
       recalculate_future_executions: {
         Args: { p_routine_id: string };

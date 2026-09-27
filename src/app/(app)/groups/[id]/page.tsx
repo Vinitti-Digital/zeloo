@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { GroupInvitationsPanel } from "@/features/invitations/group-invitations-panel";
+import { MaintenanceGroupsPanel } from "@/features/maintenance-groups/maintenance-groups-panel";
 import { formatJoinedDate, formatMemberRole } from "@/lib/i18n/labels";
 import { createClient } from "@/lib/supabase/server";
 
@@ -35,12 +37,46 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
     .eq("status", "ACTIVE")
     .maybeSingle();
 
-  const { data: members } = await supabase
-    .from("user_group_members")
-    .select("id, role, status, joined_at, user_id")
-    .eq("user_group_id", id)
-    .eq("status", "ACTIVE")
-    .order("joined_at", { ascending: true });
+  if (!membership) {
+    notFound();
+  }
+
+  const isOwner = membership.role === "OWNER";
+
+  const [{ data: members }, { data: invitations }, { data: maintenanceGroups }] =
+    await Promise.all([
+      supabase
+        .from("user_group_members")
+        .select("id, role, status, joined_at, user_id")
+        .eq("user_group_id", id)
+        .eq("status", "ACTIVE")
+        .order("joined_at", { ascending: true }),
+      isOwner
+        ? supabase
+            .from("invitations")
+            .select(
+              "id, email, invited_by_display_name, expires_at, created_at, status",
+            )
+            .eq("user_group_id", id)
+            .eq("status", "PENDING")
+            .gt("expires_at", new Date().toISOString())
+            .order("created_at", { ascending: false })
+        : Promise.resolve({
+            data: [] as Array<{
+              id: string;
+              email: string;
+              invited_by_display_name: string;
+              expires_at: string;
+              created_at: string;
+              status: "PENDING" | "ACCEPTED" | "CANCELLED" | "EXPIRED";
+            }>,
+          }),
+      supabase
+        .from("maintenance_groups")
+        .select("id, name, description")
+        .eq("user_group_id", id)
+        .order("created_at", { ascending: true }),
+    ]);
 
   const memberUserIds = (members ?? []).map((member) => member.user_id);
   const { data: profiles } =
@@ -75,15 +111,13 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
                 <h1 className="font-[family-name:var(--font-display)] text-3xl tracking-tight text-foreground sm:text-4xl">
                   {group.name}
                 </h1>
-                {membership ? (
-                  <Badge
-                    variant={
-                      membership.role === "OWNER" ? "default" : "secondary"
-                    }
-                  >
-                    {formatMemberRole(membership.role)}
-                  </Badge>
-                ) : null}
+                <Badge
+                  variant={
+                    membership.role === "OWNER" ? "default" : "secondary"
+                  }
+                >
+                  {formatMemberRole(membership.role)}
+                </Badge>
               </div>
               {group.description ? (
                 <p className="max-w-2xl text-muted-foreground">
@@ -97,6 +131,18 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
           </div>
         </div>
       </div>
+
+      <MaintenanceGroupsPanel
+        userGroupId={id}
+        groups={maintenanceGroups ?? []}
+        isOwner={isOwner}
+      />
+
+      <GroupInvitationsPanel
+        userGroupId={id}
+        invitations={invitations ?? []}
+        isOwner={isOwner}
+      />
 
       <section className="animate-fade-up-delay space-y-3">
         <div className="flex items-end justify-between gap-3">
@@ -151,23 +197,6 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      <section className="animate-fade-up-delay-2 rounded-3xl border border-highlight/40 bg-[linear-gradient(135deg,#FFF1D2_0%,#FFFFFF_70%)] p-5 sm:p-6">
-        <div className="flex items-start gap-3">
-          <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-highlight/30 text-primary">
-            <Sparkles className="size-4" />
-          </span>
-          <div className="space-y-1">
-            <h2 className="font-[family-name:var(--font-display)] text-xl text-foreground">
-              Em breve neste grupo
-            </h2>
-            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Aqui vão aparecer grupos de manutenção, serviços, rotinas e
-              execuções — o próximo passo da jornada Zeloo.
-            </p>
-          </div>
         </div>
       </section>
     </div>
