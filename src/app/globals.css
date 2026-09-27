@@ -98,3 +98,59 @@
     @apply font-sans;
   }
 }
+
+@layer utilities {
+  .surface-atmosphere {
+    background-color: var(--background);
+    background-image:
+      radial-gradient(circle at 12% 18%, #f7b73333, transparent 34%),
+      radial-gradient(circle at 88% 12%, #fff1d2cc, transparent 28%),
+      linear-gradient(165deg, #fffdf8 0%, #fff7e8 48%, #fffdf8 100%);
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.7s ease-out both;
+  }
+
+  .animate-fade-up-delay {
+    animation: fade-up 0.7s ease-out 0.12s both;
+  }
+
+  .animate-fade-up-delay-2 {
+    animation: fade-up 0.7s ease-out 0.22s both;
+  }
+
+  .animate-soft-float {
+    animation: soft-float 5.5s ease-in-out infinite;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-up-delay,
+  .animate-fade-up-delay-2,
+  .animate-soft-float {
+    animation: none;
+  }
+}
