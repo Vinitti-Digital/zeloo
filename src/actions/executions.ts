@@ -65,6 +65,7 @@ export async function completeExecutionAction(
       parsed.data.serviceId,
     ),
   );
+  revalidatePath(`/groups/${parsed.data.userGroupId}`);
   return { success: "Execução concluída." };
 }
 
@@ -106,6 +107,7 @@ export async function cancelExecutionAction(
       parsed.data.serviceId,
     ),
   );
+  revalidatePath(`/groups/${parsed.data.userGroupId}`);
   return { success: "Execução cancelada." };
 }
 
@@ -149,5 +151,6 @@ export async function rescheduleExecutionAction(
       parsed.data.serviceId,
     ),
   );
+  revalidatePath(`/groups/${parsed.data.userGroupId}`);
   return { success: "Execução reagendada." };
 }
