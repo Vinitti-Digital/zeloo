@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Gestão colaborativa de manutenção e organização",
     start_url: "/groups",
     display: "standalone",
-    background_color: "#f3efe6",
-    theme_color: "#1f4b3a",
+    background_color: "#FFFDF8",
+    theme_color: "#6B3418",
     lang: "pt-BR",
     icons: [
       {

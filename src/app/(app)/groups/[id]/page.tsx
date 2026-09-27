@@ -71,7 +71,7 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
           ← Voltar para os grupos
         </Link>
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="font-[family-name:var(--font-display)] text-3xl text-[#1f4b3a]">
+          <h1 className="font-[family-name:var(--font-display)] text-3xl text-foreground">
             {group.name}
           </h1>
           {membership ? (

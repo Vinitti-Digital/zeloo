@@ -39,7 +39,7 @@ export default async function GroupsPage() {
   return (
     <div className="space-y-8">
       <section className="space-y-2">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl text-[#1f4b3a]">
+        <h1 className="font-[family-name:var(--font-display)] text-3xl text-foreground">
           Seus grupos
         </h1>
         <p className="max-w-2xl text-muted-foreground">
@@ -62,7 +62,7 @@ export default async function GroupsPage() {
 
               return (
                 <Link key={group.id} href={`/groups/${group.id}`}>
-                  <Card className="h-full transition-colors hover:border-[#1f4b3a]/40">
+                  <Card className="h-full transition-colors hover:border-primary/50">
                     <CardHeader>
                       <div className="flex items-start justify-between gap-2">
                         <CardTitle>{group.name}</CardTitle>
