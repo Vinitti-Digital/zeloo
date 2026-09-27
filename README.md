@@ -106,10 +106,10 @@ npm run typecheck
 - [x] Reagendar execução
 - [x] Cancelar execução
 
-### 8. Activity log — pendente
+### 8. Activity log — concluída
 
-- [ ] Visualização do histórico de atividades do grupo
-- [ ] Filtros básicos (tipo / período)
+- [x] Visualização do histórico de atividades do grupo (`activity_logs` + RLS)
+- [x] Filtros básicos por tipo e período (via `searchParams` na página do grupo)
 
 ### 9. PWA offline — pendente (depois)
 
@@ -127,5 +127,5 @@ npm run typecheck
 
 ## Status atual
 
-**Etapa ativa:** 8 — Activity log  
+**Etapa ativa:** 9 — PWA offline  
 **Última atualização do roadmap:** 2026-09-27
