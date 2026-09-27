@@ -2,36 +2,33 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-type BrandMarkProps = {
+type BrandSymbolProps = {
   className?: string;
   size?: number;
   priority?: boolean;
-  /** cream (default), yellow, or brown square app icons */
-  variant?: "cream" | "yellow" | "brown";
 };
 
-const MARK_SRC = {
-  cream: "/brand/icon-cream.png",
-  yellow: "/brand/icon-yellow.png",
-  brown: "/brand/icon-brown.png",
-} as const;
-
-export function BrandMark({
+/** Smiling house only — favicon/app mark / compact symbol. */
+export function BrandSymbol({
   className,
   size = 40,
   priority = false,
-  variant = "cream",
-}: BrandMarkProps) {
+}: BrandSymbolProps) {
   return (
     <Image
-      src={MARK_SRC[variant]}
+      src="/branding/zeloo-symbol.png"
       alt="Zeloo"
       width={size}
       height={size}
       priority={priority}
-      className={cn("rounded-xl", className)}
+      className={cn("h-auto w-auto", className)}
     />
   );
+}
+
+/** @deprecated Prefer BrandSymbol — kept as alias for existing imports. */
+export function BrandMark(props: BrandSymbolProps) {
+  return <BrandSymbol {...props} />;
 }
 
 type BrandWordmarkProps = {
@@ -40,17 +37,17 @@ type BrandWordmarkProps = {
   priority?: boolean;
 };
 
-/** Horizontal wordmark only — keep height modest; do not force into square slots. */
+/** Wordmark only — primary brand mark inside authenticated app chrome. */
 export function BrandWordmark({
   className,
-  height = 40,
+  height = 32,
   priority = false,
 }: BrandWordmarkProps) {
-  const width = Math.round(height * (731 / 206));
+  const width = Math.round(height * (1568 / 470));
 
   return (
     <Image
-      src="/brand/wordmark.png"
+      src="/branding/zeloo-wordmark.png"
       alt="Zeloo"
       width={width}
       height={height}
@@ -60,24 +57,49 @@ export function BrandWordmark({
   );
 }
 
-type BrandStackProps = {
+type BrandMascotProps = {
   className?: string;
-  /** Rendered width; height follows ~1.07 aspect of the vertical lockup */
   width?: number;
   priority?: boolean;
 };
 
-/** Vertical mascot + wordmark. Use only at large sizes (landing / empty states). */
-export function BrandStack({
+/** Full mascot with tools — empty states, success, friendly moments. */
+export function BrandMascot({
   className,
-  width = 220,
+  width = 160,
   priority = false,
-}: BrandStackProps) {
-  const height = Math.round(width * (886 / 946));
+}: BrandMascotProps) {
+  const height = Math.round(width * (1041 / 1231));
 
   return (
     <Image
-      src="/brand/logo-stack.png"
+      src="/branding/zeloo-mascot.png"
+      alt=""
+      width={width}
+      height={height}
+      priority={priority}
+      className={cn("h-auto w-auto", className)}
+    />
+  );
+}
+
+type BrandLogoFullProps = {
+  className?: string;
+  width?: number;
+  priority?: boolean;
+};
+
+/** Mascot + Zeloo wordmark — login, register, landing, institutional. */
+export function BrandLogoFull({
+  className,
+  width = 220,
+  priority = false,
+}: BrandLogoFullProps) {
+  const height = Math.round(width * (1099 / 1162));
+
+  return (
+    <Image
+      src="/branding/zeloo-logo-full.png"
       alt="Zeloo"
       width={width}
       height={height}
@@ -87,26 +109,21 @@ export function BrandStack({
   );
 }
 
+/** @deprecated Prefer BrandLogoFull. */
+export function BrandStack(props: BrandLogoFullProps) {
+  return <BrandLogoFull {...props} />;
+}
+
 type BrandLockupProps = {
   className?: string;
-  markSize?: number;
-  showWordmark?: boolean;
+  height?: number;
 };
 
-/** Compact header lockup: square mark + text (not the tall logo-stack). */
-export function BrandLockup({
-  className,
-  markSize = 36,
-  showWordmark = true,
-}: BrandLockupProps) {
+/** Compact header lockup: wordmark only (authenticated app). */
+export function BrandLockup({ className, height = 28 }: BrandLockupProps) {
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      <BrandMark size={markSize} />
-      {showWordmark ? (
-        <span className="font-[family-name:var(--font-display)] text-xl font-semibold tracking-tight text-foreground">
-          Zeloo
-        </span>
-      ) : null}
+    <span className={cn("inline-flex items-center", className)}>
+      <BrandWordmark height={height} />
     </span>
   );
 }

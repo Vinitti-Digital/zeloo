@@ -1,5 +1,4 @@
-import { Wrench } from "lucide-react";
-
+import { BrandMascot } from "@/components/brand/logo";
 import { CreateMaintenanceGroupForm } from "@/features/maintenance-groups/create-maintenance-group-form";
 import { MaintenanceGroupItem } from "@/features/maintenance-groups/maintenance-group-item";
 
@@ -53,8 +52,8 @@ export function MaintenanceGroupsPanel({
         </div>
       ) : (
         <div className="rounded-3xl border border-dashed border-primary/25 bg-white/70 px-5 py-8 text-center">
-          <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-2xl bg-[#FFF1D2] text-primary">
-            <Wrench className="size-5" />
+          <div className="mx-auto mb-3 flex justify-center">
+            <BrandMascot width={96} />
           </div>
           <p className="font-medium text-foreground">
             Nenhum grupo de manutenção ainda
