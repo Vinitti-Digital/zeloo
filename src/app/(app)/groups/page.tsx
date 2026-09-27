@@ -1,12 +1,7 @@
 import Link from "next/link";
+import { ChevronRight, UsersRound } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { CreateUserGroupForm } from "@/features/user-groups/create-user-group-form";
 import { formatMemberRole } from "@/lib/i18n/labels";
 import { createClient } from "@/lib/supabase/server";
@@ -16,6 +11,12 @@ export default async function GroupsPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("display_name")
+    .eq("id", user!.id)
+    .maybeSingle();
 
   const { data: memberships } = await supabase
     .from("user_group_members")
@@ -35,61 +36,85 @@ export default async function GroupsPage() {
       : { data: [] };
 
   const groupsById = new Map((groups ?? []).map((group) => [group.id, group]));
+  const hasGroups = Boolean(memberships && memberships.length > 0);
+  const firstName = profile?.display_name?.split(" ")[0] ?? "olá";
 
   return (
     <div className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl text-foreground">
-          Seus grupos
-        </h1>
-        <p className="max-w-2xl text-muted-foreground">
-          Escolha um grupo para gerenciar manutenções ou crie um novo espaço
-          compartilhado.
-        </p>
+      <section className="animate-fade-up flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-highlight">
+            Bem-vindo(a), {firstName}
+          </p>
+          <h1 className="font-[family-name:var(--font-display)] text-3xl tracking-tight text-foreground sm:text-4xl">
+            Seus grupos
+          </h1>
+          <p className="max-w-xl text-muted-foreground">
+            Escolha um espaço compartilhado para cuidar das manutenções juntos.
+          </p>
+        </div>
+        {hasGroups ? <CreateUserGroupForm /> : null}
       </section>
 
-      <section className="space-y-3">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-          Grupos ativos
-        </h2>
-        {memberships && memberships.length > 0 ? (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {memberships.map((membership) => {
+      <section className="animate-fade-up-delay space-y-3">
+        {hasGroups ? (
+          <div className="grid gap-3">
+            {memberships!.map((membership) => {
               const group = groupsById.get(membership.user_group_id);
               if (!group) {
                 return null;
               }
 
+              const initial = group.name.trim().charAt(0).toUpperCase() || "G";
+
               return (
-                <Link key={group.id} href={`/groups/${group.id}`}>
-                  <Card className="h-full transition-colors hover:border-primary/50">
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-2">
-                        <CardTitle>{group.name}</CardTitle>
-                        <Badge variant="secondary">
-                          {formatMemberRole(membership.role)}
-                        </Badge>
-                      </div>
-                      {group.description ? (
-                        <CardDescription>{group.description}</CardDescription>
-                      ) : (
-                        <CardDescription>Sem descrição</CardDescription>
-                      )}
-                    </CardHeader>
-                  </Card>
+                <Link
+                  key={group.id}
+                  href={`/groups/${group.id}`}
+                  className="group flex items-center gap-4 rounded-3xl border border-border bg-white/85 p-4 shadow-[0_10px_30px_rgba(43,22,12,0.04)] transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-[0_16px_36px_rgba(43,22,12,0.08)]"
+                >
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#FFF1D2] font-[family-name:var(--font-display)] text-xl text-primary">
+                    {initial}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex flex-wrap items-center gap-2">
+                      <span className="truncate text-lg font-semibold text-foreground">
+                        {group.name}
+                      </span>
+                      <Badge
+                        variant={
+                          membership.role === "OWNER" ? "default" : "secondary"
+                        }
+                      >
+                        {formatMemberRole(membership.role)}
+                      </Badge>
+                    </span>
+                    <span className="mt-1 block truncate text-sm text-muted-foreground">
+                      {group.description || "Sem descrição"}
+                    </span>
+                  </span>
+                  <ChevronRight className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
                 </Link>
               );
             })}
           </div>
         ) : (
-          <p className="rounded-lg border border-dashed border-border/70 bg-background/50 px-4 py-6 text-sm text-muted-foreground">
-            Você ainda não participa de nenhum grupo. Crie o primeiro abaixo.
-          </p>
+          <div className="rounded-3xl border border-dashed border-primary/25 bg-white/70 px-5 py-10 text-center">
+            <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-[#FFF1D2] text-primary">
+              <UsersRound className="size-7" />
+            </div>
+            <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
+              Crie seu primeiro grupo
+            </h2>
+            <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+              Um grupo reúne as pessoas da casa ou do escritório para organizar
+              manutenções e rotinas no mesmo lugar.
+            </p>
+            <div className="mx-auto mt-6 max-w-md text-left">
+              <CreateUserGroupForm defaultOpen />
+            </div>
+          </div>
         )}
-      </section>
-
-      <section>
-        <CreateUserGroupForm />
       </section>
     </div>
   );
