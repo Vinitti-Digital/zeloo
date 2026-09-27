@@ -38,8 +38,13 @@ export async function updateSession(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const isPublicAuthRoute =
     pathname.startsWith("/login") || pathname.startsWith("/register");
+  const isPublicAsset =
+    pathname === "/manifest.webmanifest" ||
+    pathname.startsWith("/icons/") ||
+    pathname.startsWith("/brand/") ||
+    pathname === "/favicon.ico";
 
-  if (!user && !isPublicAuthRoute && pathname !== "/") {
+  if (!user && !isPublicAuthRoute && !isPublicAsset && pathname !== "/") {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
