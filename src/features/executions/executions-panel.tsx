@@ -1,5 +1,4 @@
-import { CalendarClock } from "lucide-react";
-
+import { BrandMascot } from "@/components/brand/logo";
 import { CreateOneOffForm } from "@/features/executions/create-one-off-form";
 import { ExecutionItem } from "@/features/executions/execution-item";
 
@@ -71,8 +70,8 @@ export function ExecutionsPanel({
           </div>
         ) : (
           <div className="rounded-3xl border border-dashed border-primary/25 bg-white/70 px-5 py-6 text-center">
-            <div className="mx-auto mb-2 flex size-10 items-center justify-center rounded-2xl bg-[#FFF1D2] text-primary">
-              <CalendarClock className="size-4" />
+            <div className="mx-auto mb-2 flex justify-center">
+              <BrandMascot width={80} />
             </div>
             <p className="text-sm text-muted-foreground">
               Nenhuma execução pendente.
