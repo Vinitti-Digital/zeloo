@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
 
+import { Toaster } from "@/components/ui/sonner";
+import { ConnectionSync } from "@/features/pwa/connection-sync";
+import { ServiceWorkerRegister } from "@/features/pwa/service-worker-register";
+
 import "./globals.css";
 
 const sans = DM_Sans({
@@ -48,7 +52,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${sans.variable} ${display.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <ConnectionSync />
         {children}
+        <Toaster />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
