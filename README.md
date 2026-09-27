@@ -71,16 +71,19 @@ npm run typecheck
 - [x] Novos logos por proporção (mark, wordmark, stack; sem forçar dimensões erradas)
 - [x] Polish da landing, auth, lista e detalhe de grupos
 
-### 3. Convites — pendente
+### 3. Convites — concluída
 
-- [ ] Criar convite para grupo de usuários
-- [ ] Aceitar / recusar / cancelar convite
-- [ ] Listar convites pendentes (remetente e convidado)
+- [x] RPCs: `create_invitation`, `accept_invitation`, `cancel_invitation` (+ expire lazy)
+- [x] Criar convite para grupo de usuários (Proprietário)
+- [x] Aceitar / recusar / cancelar convite
+- [x] Listar convites pendentes (remetente no detalhe; convidado em `/groups`)
+- [x] Convidado consegue ver o nome do grupo convidado (RLS `user_groups_select_invitee`)
 
-### 4. Grupos de manutenção — pendente
+### 4. Grupos de manutenção — concluída
 
-- [ ] CRUD de grupos de manutenção dentro de um grupo de usuários
-- [ ] Controle de acesso alinhado às políticas RLS
+- [x] RPCs: `create_maintenance_group`, `update_maintenance_group`, `delete_maintenance_group`
+- [x] CRUD de grupos de manutenção dentro de um grupo de usuários
+- [x] Controle de acesso alinhado às políticas RLS (membros criam/editam; Proprietário exclui)
 
 ### 5. Serviços — pendente
 
@@ -121,5 +124,5 @@ npm run typecheck
 
 ## Status atual
 
-**Etapa ativa:** 3 — Convites  
+**Etapa ativa:** 5 — Serviços  
 **Última atualização do roadmap:** 2026-09-27

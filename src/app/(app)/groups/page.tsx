@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronRight, UsersRound } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { MyPendingInvitations } from "@/features/invitations/my-pending-invitations";
 import { CreateUserGroupForm } from "@/features/user-groups/create-user-group-form";
 import { formatMemberRole } from "@/lib/i18n/labels";
 import { createClient } from "@/lib/supabase/server";
@@ -11,6 +12,8 @@ export default async function GroupsPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const email = user?.email?.toLowerCase() ?? "";
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -27,13 +30,52 @@ export default async function GroupsPage() {
 
   const groupIds = (memberships ?? []).map((item) => item.user_group_id);
 
-  const { data: groups } =
+  const [{ data: groups }, { data: pendingInvites }] = await Promise.all([
     groupIds.length > 0
-      ? await supabase
+      ? supabase
           .from("user_groups")
           .select("id, name, description, created_at")
           .in("id", groupIds)
+      : Promise.resolve({ data: [] as const }),
+    email
+      ? supabase
+          .from("invitations")
+          .select(
+            "id, user_group_id, invited_by_display_name, expires_at, status",
+          )
+          .eq("email", email)
+          .eq("status", "PENDING")
+          .gt("expires_at", new Date().toISOString())
+          .order("created_at", { ascending: false })
+      : Promise.resolve({ data: [] as const }),
+  ]);
+
+  const inviteGroupIds = Array.from(
+    new Set((pendingInvites ?? []).map((invite) => invite.user_group_id)),
+  );
+
+  const { data: inviteGroups } =
+    inviteGroupIds.length > 0
+      ? await supabase
+          .from("user_groups")
+          .select("id, name")
+          .in("id", inviteGroupIds)
       : { data: [] };
+
+  const inviteGroupsById = new Map(
+    (inviteGroups ?? []).map((group) => [group.id, group]),
+  );
+
+  const invitationsForMe = (pendingInvites ?? [])
+    .map((invite) => ({
+      id: invite.id,
+      user_group_id: invite.user_group_id,
+      invited_by_display_name: invite.invited_by_display_name,
+      expires_at: invite.expires_at,
+      groupName:
+        inviteGroupsById.get(invite.user_group_id)?.name ?? "Grupo convidado",
+    }))
+    .filter((invite) => Boolean(invite.groupName));
 
   const groupsById = new Map((groups ?? []).map((group) => [group.id, group]));
   const hasGroups = Boolean(memberships && memberships.length > 0);
@@ -55,6 +97,8 @@ export default async function GroupsPage() {
         </div>
         {hasGroups ? <CreateUserGroupForm /> : null}
       </section>
+
+      <MyPendingInvitations invitations={invitationsForMe} />
 
       <section className="animate-fade-up-delay space-y-3">
         {hasGroups ? (

@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 
+import type { ActionState } from "@/lib/actions/types";
 import { createClient } from "@/lib/supabase/server";
 import {
   createUserGroupSchema,
@@ -9,10 +10,7 @@ import {
   registerSchema,
 } from "@/lib/validation/auth";
 
-export type ActionState = {
-  error?: string;
-  success?: string;
-};
+export type { ActionState };
 
 function translateAuthError(message: string): string {
   const normalized = message.toLowerCase();
