@@ -25,9 +25,9 @@ export function LoginForm() {
   return (
     <Card className="w-full max-w-md border-border/60 shadow-sm">
       <CardHeader>
-        <CardTitle>Sign in</CardTitle>
+        <CardTitle>Entrar</CardTitle>
         <CardDescription>
-          Access your collaborative maintenance groups.
+          Acesse seus grupos colaborativos de manutenção.
         </CardDescription>
       </CardHeader>
       <form action={formAction}>
@@ -38,7 +38,7 @@ export function LoginForm() {
             </Alert>
           ) : null}
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">E-mail</Label>
             <Input
               id="email"
               name="email"
@@ -48,7 +48,7 @@ export function LoginForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Senha</Label>
             <Input
               id="password"
               name="password"
@@ -60,12 +60,12 @@ export function LoginForm() {
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
           <Button type="submit" className="w-full" disabled={pending}>
-            {pending ? "Signing in..." : "Sign in"}
+            {pending ? "Entrando..." : "Entrar"}
           </Button>
           <p className="text-sm text-muted-foreground">
-            No account yet?{" "}
+            Ainda não tem conta?{" "}
             <Link href="/register" className="text-foreground underline">
-              Create one
+              Criar conta
             </Link>
           </p>
         </CardFooter>

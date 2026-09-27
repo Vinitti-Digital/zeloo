@@ -25,9 +25,9 @@ export function RegisterForm() {
   return (
     <Card className="w-full max-w-md border-border/60 shadow-sm">
       <CardHeader>
-        <CardTitle>Create account</CardTitle>
+        <CardTitle>Criar conta</CardTitle>
         <CardDescription>
-          Start organizing maintenance with your household or team.
+          Comece a organizar manutenções com sua casa ou equipe.
         </CardDescription>
       </CardHeader>
       <form action={formAction}>
@@ -43,11 +43,11 @@ export function RegisterForm() {
             </Alert>
           ) : null}
           <div className="space-y-2">
-            <Label htmlFor="displayName">Display name</Label>
+            <Label htmlFor="displayName">Nome de exibição</Label>
             <Input id="displayName" name="displayName" required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">E-mail</Label>
             <Input
               id="email"
               name="email"
@@ -57,7 +57,7 @@ export function RegisterForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Senha</Label>
             <Input
               id="password"
               name="password"
@@ -69,12 +69,12 @@ export function RegisterForm() {
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
           <Button type="submit" className="w-full" disabled={pending}>
-            {pending ? "Creating..." : "Create account"}
+            {pending ? "Criando..." : "Criar conta"}
           </Button>
           <p className="text-sm text-muted-foreground">
-            Already have an account?{" "}
+            Já tem uma conta?{" "}
             <Link href="/login" className="text-foreground underline">
-              Sign in
+              Entrar
             </Link>
           </p>
         </CardFooter>

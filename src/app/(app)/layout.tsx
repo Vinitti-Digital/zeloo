@@ -41,7 +41,7 @@ export default async function AppLayout({
             </span>
             <form action={signOutAction}>
               <Button type="submit" variant="outline" size="sm">
-                Sign out
+                Sair
               </Button>
             </form>
           </div>

@@ -27,9 +27,9 @@ export function CreateUserGroupForm() {
   return (
     <Card className="border-border/60 shadow-sm">
       <CardHeader>
-        <CardTitle>Create a user group</CardTitle>
+        <CardTitle>Criar grupo de usuários</CardTitle>
         <CardDescription>
-          You become OWNER automatically. Invite members later.
+          Você se torna Proprietário automaticamente. Convide membros depois.
         </CardDescription>
       </CardHeader>
       <form action={formAction}>
@@ -40,26 +40,26 @@ export function CreateUserGroupForm() {
             </Alert>
           ) : null}
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Nome</Label>
             <Input
               id="name"
               name="name"
-              placeholder="Home Mateus & Micka"
+              placeholder="Casa Mateus & Micka"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">Descrição</Label>
             <Input
               id="description"
               name="description"
-              placeholder="Optional short description"
+              placeholder="Descrição opcional"
             />
           </div>
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={pending}>
-            {pending ? "Creating..." : "Create group"}
+            {pending ? "Criando..." : "Criar grupo"}
           </Button>
         </CardFooter>
       </form>

@@ -4,11 +4,12 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Mantena",
     short_name: "Mantena",
-    description: "Collaborative maintenance and organization",
+    description: "Gestão colaborativa de manutenção e organização",
     start_url: "/groups",
     display: "standalone",
     background_color: "#f3efe6",
     theme_color: "#1f4b3a",
+    lang: "pt-BR",
     icons: [
       {
         src: "/icons/icon-192.png",

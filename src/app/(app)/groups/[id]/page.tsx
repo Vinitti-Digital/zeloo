@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { formatJoinedDate, formatMemberRole } from "@/lib/i18n/labels";
 import { createClient } from "@/lib/supabase/server";
 
 type GroupPageProps = {
@@ -67,13 +68,15 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
           href="/groups"
           className="text-sm text-muted-foreground hover:text-foreground"
         >
-          ← Back to groups
+          ← Voltar para os grupos
         </Link>
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="font-[family-name:var(--font-display)] text-3xl text-[#1f4b3a]">
             {group.name}
           </h1>
-          {membership ? <Badge>{membership.role}</Badge> : null}
+          {membership ? (
+            <Badge>{formatMemberRole(membership.role)}</Badge>
+          ) : null}
         </div>
         {group.description ? (
           <p className="text-muted-foreground">{group.description}</p>
@@ -82,9 +85,9 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Members</CardTitle>
+          <CardTitle>Membros</CardTitle>
           <CardDescription>
-            Active members of this collaborative group.
+            Membros ativos deste grupo colaborativo.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -98,13 +101,15 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
               >
                 <div>
                   <p className="font-medium">
-                    {profile?.display_name ?? "Unknown member"}
+                    {profile?.display_name ?? "Membro desconhecido"}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Joined {new Date(member.joined_at).toLocaleDateString()}
+                    Entrou em {formatJoinedDate(member.joined_at)}
                   </p>
                 </div>
-                <Badge variant="secondary">{member.role}</Badge>
+                <Badge variant="secondary">
+                  {formatMemberRole(member.role)}
+                </Badge>
               </div>
             );
           })}
@@ -113,10 +118,10 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Next steps</CardTitle>
+          <CardTitle>Próximos passos</CardTitle>
           <CardDescription>
-            Foundation is ready. Maintenance groups, services, and routines come
-            in the next iteration.
+            A fundação está pronta. Grupos de manutenção, serviços e rotinas
+            entram na próxima etapa.
           </CardDescription>
         </CardHeader>
       </Card>

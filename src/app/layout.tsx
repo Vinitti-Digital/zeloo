@@ -15,7 +15,7 @@ const display = Fraunces({
 
 export const metadata: Metadata = {
   title: "Mantena",
-  description: "Collaborative maintenance and organization",
+  description: "Gestão colaborativa de manutenção e organização",
   applicationName: "Mantena",
   manifest: "/manifest.webmanifest",
 };
@@ -29,7 +29,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       className={`${sans.variable} ${display.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">

@@ -12,21 +12,21 @@ export default function HomePage() {
           Mantena
         </p>
         <h1 className="mt-4 max-w-xl text-2xl font-medium text-foreground/90 sm:text-3xl">
-          Keep home and shared spaces maintained together.
+          Organize a manutenção da casa e dos espaços compartilhados juntos.
         </h1>
         <p className="mt-4 max-w-lg text-base text-muted-foreground">
-          Organize one-off fixes and recurring routines with clear ownership,
-          history, and mobile-first collaboration.
+          Centralize consertos pontuais e rotinas recorrentes com responsabilidade
+          clara, histórico e uso pensado para o celular.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/register" className={cn(buttonVariants())}>
-            Get started
+            Começar
           </Link>
           <Link
             href="/login"
             className={cn(buttonVariants({ variant: "outline" }))}
           >
-            Sign in
+            Entrar
           </Link>
         </div>
       </div>

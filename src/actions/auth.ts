@@ -14,6 +14,31 @@ export type ActionState = {
   success?: string;
 };
 
+function translateAuthError(message: string): string {
+  const normalized = message.toLowerCase();
+
+  if (normalized.includes("email not confirmed")) {
+    return "E-mail ainda não confirmado. Verifique sua caixa de entrada.";
+  }
+  if (normalized.includes("invalid login credentials")) {
+    return "E-mail ou senha inválidos.";
+  }
+  if (normalized.includes("user already registered")) {
+    return "Este e-mail já está cadastrado.";
+  }
+  if (normalized.includes("password should be at least")) {
+    return "A senha deve ter pelo menos 6 caracteres.";
+  }
+  if (normalized.includes("unable to validate email")) {
+    return "Não foi possível validar o e-mail informado.";
+  }
+  if (normalized.includes("email address") && normalized.includes("invalid")) {
+    return "Endereço de e-mail inválido.";
+  }
+
+  return message;
+}
+
 export async function signUpAction(
   _prev: ActionState,
   formData: FormData,
@@ -25,7 +50,7 @@ export async function signUpAction(
   });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
+    return { error: parsed.error.issues[0]?.message ?? "Dados inválidos" };
   }
 
   const supabase = await createClient();
@@ -40,13 +65,12 @@ export async function signUpAction(
   });
 
   if (error) {
-    return { error: error.message };
+    return { error: translateAuthError(error.message) };
   }
 
   if (!data.session) {
     return {
-      success:
-        "Account created. Check your email to confirm before signing in.",
+      success: "Conta criada. Confirme seu e-mail antes de entrar.",
     };
   }
 
@@ -63,7 +87,7 @@ export async function signInAction(
   });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
+    return { error: parsed.error.issues[0]?.message ?? "Dados inválidos" };
   }
 
   const supabase = await createClient();
@@ -73,7 +97,7 @@ export async function signInAction(
   });
 
   if (error) {
-    return { error: error.message };
+    return { error: translateAuthError(error.message) };
   }
 
   redirect("/groups");
@@ -95,7 +119,7 @@ export async function createUserGroupAction(
   });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
+    return { error: parsed.error.issues[0]?.message ?? "Dados inválidos" };
   }
 
   const supabase = await createClient();
@@ -104,7 +128,7 @@ export async function createUserGroupAction(
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return { error: "You must be signed in" };
+    return { error: "Você precisa estar autenticado" };
   }
 
   const { data, error } = await supabase.rpc("create_user_group", {
@@ -113,7 +137,7 @@ export async function createUserGroupAction(
   });
 
   if (error || !data) {
-    return { error: error?.message ?? "Could not create group" };
+    return { error: error?.message ?? "Não foi possível criar o grupo" };
   }
 
   redirect(`/groups/${data.id}`);

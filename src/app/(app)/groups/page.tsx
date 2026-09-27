@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CreateUserGroupForm } from "@/features/user-groups/create-user-group-form";
+import { formatMemberRole } from "@/lib/i18n/labels";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function GroupsPage() {
@@ -39,17 +40,17 @@ export default async function GroupsPage() {
     <div className="space-y-8">
       <section className="space-y-2">
         <h1 className="font-[family-name:var(--font-display)] text-3xl text-[#1f4b3a]">
-          Your groups
+          Seus grupos
         </h1>
         <p className="max-w-2xl text-muted-foreground">
-          Select a user group to manage maintenance, or create a new shared
-          space.
+          Escolha um grupo para gerenciar manutenções ou crie um novo espaço
+          compartilhado.
         </p>
       </section>
 
       <section className="space-y-3">
         <h2 className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-          Active groups
+          Grupos ativos
         </h2>
         {memberships && memberships.length > 0 ? (
           <div className="grid gap-3 sm:grid-cols-2">
@@ -65,12 +66,14 @@ export default async function GroupsPage() {
                     <CardHeader>
                       <div className="flex items-start justify-between gap-2">
                         <CardTitle>{group.name}</CardTitle>
-                        <Badge variant="secondary">{membership.role}</Badge>
+                        <Badge variant="secondary">
+                          {formatMemberRole(membership.role)}
+                        </Badge>
                       </div>
                       {group.description ? (
                         <CardDescription>{group.description}</CardDescription>
                       ) : (
-                        <CardDescription>No description</CardDescription>
+                        <CardDescription>Sem descrição</CardDescription>
                       )}
                     </CardHeader>
                   </Card>
@@ -80,7 +83,7 @@ export default async function GroupsPage() {
           </div>
         ) : (
           <p className="rounded-lg border border-dashed border-border/70 bg-background/50 px-4 py-6 text-sm text-muted-foreground">
-            You are not in any group yet. Create your first one below.
+            Você ainda não participa de nenhum grupo. Crie o primeiro abaixo.
           </p>
         )}
       </section>
