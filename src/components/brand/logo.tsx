@@ -21,6 +21,7 @@ export function BrandSymbol({
       width={size}
       height={size}
       priority={priority}
+      unoptimized
       className={cn("h-auto w-auto", className)}
     />
   );
@@ -52,6 +53,7 @@ export function BrandWordmark({
       width={width}
       height={height}
       priority={priority}
+      unoptimized
       className={cn("h-auto w-auto", className)}
     />
   );
@@ -78,6 +80,7 @@ export function BrandMascot({
       width={width}
       height={height}
       priority={priority}
+      unoptimized
       className={cn("h-auto w-auto", className)}
     />
   );
@@ -104,6 +107,7 @@ export function BrandLogoFull({
       width={width}
       height={height}
       priority={priority}
+      unoptimized
       className={cn("h-auto w-auto", className)}
     />
   );

@@ -1,4 +1,4 @@
-const CACHE_VERSION = "zeloo-offline-v1";
+const CACHE_VERSION = "zeloo-offline-v2";
 const PRECACHE = "zeloo-precache-" + CACHE_VERSION;
 const RUNTIME = "zeloo-runtime-" + CACHE_VERSION;
 
@@ -55,6 +55,7 @@ function isSameOrigin(url) {
 function isStaticAsset(url) {
   return (
     url.pathname.startsWith("/_next/static/") ||
+    url.pathname.startsWith("/_next/image") ||
     url.pathname.startsWith("/icons/") ||
     url.pathname.startsWith("/brand/") ||
     url.pathname.startsWith("/branding/") ||
