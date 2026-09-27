@@ -12,8 +12,8 @@ export default function LoginPage() {
           className="mx-auto flex w-fit flex-col items-center gap-3 transition-transform hover:scale-[1.02]"
           aria-label="Zeloo"
         >
-          <BrandMark size={68} priority />
-          <BrandWordmark height={40} priority />
+          <BrandMark size={72} priority />
+          <BrandWordmark height={36} priority />
         </Link>
         <LoginForm />
       </div>
