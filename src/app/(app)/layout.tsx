@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { signOutAction } from "@/actions/auth";
+import { BrandLockup } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 
@@ -29,11 +30,8 @@ export default async function AppLayout({
     <div className="min-h-full flex flex-1 flex-col bg-background">
       <header className="border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-4 py-3">
-          <Link
-            href="/groups"
-            className="font-[family-name:var(--font-display)] text-xl text-foreground"
-          >
-            Mantena
+          <Link href="/groups" aria-label="Zeloo">
+            <BrandLockup />
           </Link>
           <div className="flex items-center gap-3">
             <span className="hidden text-sm text-muted-foreground sm:inline">
