@@ -37,6 +37,55 @@ const DOMAIN_ERROR_MAP: Array<[RegExp | string, string]> = [
   ],
   ["Not authenticated", "Você precisa estar autenticado."],
   ["Profile not found", "Perfil não encontrado."],
+  ["Service title is required", "O título do serviço é obrigatório."],
+  ["Service not found", "Serviço não encontrado."],
+  [
+    "Responsible user must be an active member",
+    "O responsável precisa ser membro ativo do grupo.",
+  ],
+  [
+    "Only OWNER can delete services",
+    "Apenas o Proprietário pode excluir serviços.",
+  ],
+  ["Due date is required", "Informe a data da execução."],
+  [
+    "A pending execution already exists for this date",
+    "Já existe uma execução pendente nesta data.",
+  ],
+  [
+    "This service already has a routine",
+    "Este serviço já possui uma rotina.",
+  ],
+  ["Interval must be >= 1", "O intervalo deve ser pelo menos 1."],
+  ["Base date is required", "Informe a data base."],
+  [
+    "End date must be on or after base date",
+    "A data final precisa ser igual ou posterior à data base.",
+  ],
+  ["Routine not found", "Rotina não encontrada."],
+  [
+    "Only OWNER can delete routines",
+    "Apenas o Proprietário pode excluir rotinas.",
+  ],
+  ["Execution not found", "Execução não encontrada."],
+  [
+    "Only pending executions can be completed",
+    "Só é possível concluir execuções pendentes.",
+  ],
+  [
+    "Only pending executions can be cancelled",
+    "Só é possível cancelar execuções pendentes.",
+  ],
+  [
+    "Only pending executions can be rescheduled",
+    "Só é possível reagendar execuções pendentes.",
+  ],
+  ["New due date is required", "Informe a nova data."],
+  [
+    "New due date must differ from the current due date",
+    "A nova data precisa ser diferente da atual.",
+  ],
+  ["Not an active group member", "É necessário ser membro ativo do grupo."],
 ];
 
 export function translateDomainError(message: string): string {
