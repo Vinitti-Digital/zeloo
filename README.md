@@ -129,3 +129,7 @@ npm run typecheck
 
 **Etapa ativa:** concluída (roadmap 1–9)  
 **Última atualização do roadmap:** 2026-09-27
+
+### Evoluções pós-roadmap
+
+- [x] Abas no grupo: **Gestão** (CRUD) e **Calendário** (pendências por vencimento)

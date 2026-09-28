@@ -22,7 +22,8 @@ export function BrandSymbol({
       height={size}
       priority={priority}
       unoptimized
-      className={cn("h-auto w-auto", className)}
+      style={{ width: size, height: size }}
+      className={cn("shrink-0 object-contain", className)}
     />
   );
 }
@@ -54,7 +55,8 @@ export function BrandWordmark({
       height={height}
       priority={priority}
       unoptimized
-      className={cn("h-auto w-auto", className)}
+      style={{ width, height }}
+      className={cn("shrink-0 object-contain", className)}
     />
   );
 }
@@ -81,7 +83,8 @@ export function BrandMascot({
       height={height}
       priority={priority}
       unoptimized
-      className={cn("h-auto w-auto", className)}
+      style={{ width, height }}
+      className={cn("shrink-0 object-contain", className)}
     />
   );
 }
@@ -108,7 +111,8 @@ export function BrandLogoFull({
       height={height}
       priority={priority}
       unoptimized
-      className={cn("h-auto w-auto", className)}
+      style={{ width, height, maxWidth: "100%" }}
+      className={cn("shrink-0 object-contain", className)}
     />
   );
 }
