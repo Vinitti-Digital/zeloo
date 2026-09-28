@@ -3,9 +3,9 @@ import { z } from "zod";
 const frequencySchema = z.enum(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]);
 
 export const createRoutineSchema = z.object({
-  serviceId: z.string().uuid("Serviço inválido"),
+  serviceId: z.string().uuid("Tarefa inválida"),
   userGroupId: z.string().uuid("Grupo inválido"),
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
   frequency: frequencySchema,
   intervalValue: z.coerce.number().int().min(1, "Intervalo mínimo é 1"),
   baseDate: z.string().min(1, "Informe a data base"),
@@ -16,19 +16,19 @@ export const createRoutineSchema = z.object({
 });
 
 export const updateRoutineSchema = createRoutineSchema.extend({
-  routineId: z.string().uuid("Rotina inválida"),
+  routineId: z.string().uuid("Repetição inválida"),
 });
 
 export const deleteRoutineSchema = z.object({
-  routineId: z.string().uuid("Rotina inválida"),
+  routineId: z.string().uuid("Repetição inválida"),
   userGroupId: z.string().uuid("Grupo inválido"),
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
-  serviceId: z.string().uuid("Serviço inválido"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
+  serviceId: z.string().uuid("Tarefa inválida"),
 });
 
 export const recalculateRoutineSchema = z.object({
-  routineId: z.string().uuid("Rotina inválida"),
+  routineId: z.string().uuid("Repetição inválida"),
   userGroupId: z.string().uuid("Grupo inválido"),
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
-  serviceId: z.string().uuid("Serviço inválido"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
+  serviceId: z.string().uuid("Tarefa inválida"),
 });

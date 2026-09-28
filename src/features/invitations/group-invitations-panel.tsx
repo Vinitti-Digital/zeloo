@@ -26,11 +26,9 @@ export function GroupInvitationsPanel({
   }
 
   return (
-    <section className="animate-fade-up-delay space-y-3">
+    <div className="space-y-3">
       <div>
-        <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
-          Convites
-        </h2>
+        <h3 className="text-base font-semibold text-foreground">Convites</h3>
         <p className="text-sm text-muted-foreground">
           Chame pessoas pelo e-mail da conta delas no Zeloo.
         </p>
@@ -75,6 +73,6 @@ export function GroupInvitationsPanel({
           </p>
         )}
       </div>
-    </section>
+    </div>
   );
 }

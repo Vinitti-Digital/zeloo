@@ -82,7 +82,7 @@ export default async function MaintenanceGroupPage({
           className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="size-4" />
-          Voltar para o grupo
+          Voltar às pendências
         </Link>
 
         <div className="rounded-3xl border border-border bg-white/85 p-5 shadow-[0_12px_36px_rgba(43,22,12,0.05)] sm:p-6">

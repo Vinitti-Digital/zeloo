@@ -33,10 +33,10 @@ export function ExecutionsPanel({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
-            Execuções
+            Pendências
           </h2>
           <p className="text-sm text-muted-foreground">
-            Pendências e histórico deste serviço.
+            O que falta fazer e o histórico desta tarefa.
           </p>
         </div>
         <CreateOneOffForm
@@ -74,7 +74,7 @@ export function ExecutionsPanel({
               <BrandMascot width={80} />
             </div>
             <p className="text-sm text-muted-foreground">
-              Nenhuma execução pendente.
+              Nenhuma pendência no momento.
             </p>
           </div>
         )}
@@ -104,7 +104,7 @@ export function ExecutionsPanel({
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
-            Ainda não há execuções concluídas ou canceladas.
+            Ainda não há pendências concluídas ou canceladas.
           </p>
         )}
       </div>

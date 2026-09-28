@@ -73,7 +73,7 @@ export function RoutineForm({
     <div className="space-y-4 rounded-3xl border border-border bg-white/85 p-5 sm:p-6">
       <div>
         <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
-          Rotina
+          Repetição
         </h2>
         <p className="text-sm text-muted-foreground">
           {mode === "create"
@@ -225,8 +225,8 @@ export function RoutineForm({
             {pending
               ? "Salvando..."
               : mode === "create"
-                ? "Criar rotina"
-                : "Salvar rotina"}
+                ? "Criar repetição"
+                : "Salvar repetição"}
           </Button>
         </div>
       </form>
@@ -268,7 +268,7 @@ export function RoutineForm({
                 className="border-destructive/30 text-destructive hover:bg-destructive/10"
                 disabled={deletePending}
               >
-                {deletePending ? "Excluindo..." : "Excluir rotina"}
+                {deletePending ? "Excluindo..." : "Excluir repetição"}
               </Button>
             </form>
           ) : null}

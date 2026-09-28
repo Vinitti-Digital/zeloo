@@ -153,7 +153,7 @@ export default async function GroupsPage() {
             </h2>
             <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
               Um grupo reúne as pessoas da casa ou do escritório para organizar
-              manutenções e rotinas no mesmo lugar.
+              tarefas e pendências no mesmo lugar.
             </p>
             <div className="mx-auto mt-6 max-w-md text-left">
               <CreateUserGroupForm defaultOpen />

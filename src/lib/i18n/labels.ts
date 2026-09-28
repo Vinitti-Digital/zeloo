@@ -112,13 +112,13 @@ export function formatActivityEntityType(type: ActivityEntityType): string {
     case "INVITATION":
       return "Convite";
     case "MAINTENANCE_GROUP":
-      return "Manutenção";
+      return "Espaço";
     case "SERVICE":
-      return "Serviço";
+      return "Tarefa";
     case "ROUTINE":
-      return "Rotina";
+      return "Repetição";
     case "EXECUTION":
-      return "Execução";
+      return "Pendência";
   }
 }
 
@@ -151,7 +151,7 @@ export function formatActivityAction(action: ActivityAction): string {
     case "OWNER_SUCCEEDED":
       return "transferiu a propriedade";
     case "ROUTINE_RECALCULATED":
-      return "recalculou a rotina";
+      return "recalculou a repetição";
   }
 }
 
@@ -174,7 +174,7 @@ export function formatActivitySubject(
   if (typeof name === "string" && name.trim()) return name;
   if (typeof email === "string" && email.trim()) return email;
   if (entityType === "ROUTINE" && typeof metadata.created_executions === "number") {
-    return `${metadata.created_executions} execução(ões)`;
+    return `${metadata.created_executions} pendência(s)`;
   }
   return null;
 }

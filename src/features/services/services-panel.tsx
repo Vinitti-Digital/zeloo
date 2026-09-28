@@ -41,10 +41,10 @@ export function ServicesPanel({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
-            Serviços
+            Tarefas
           </h2>
           <p className="text-sm text-muted-foreground">
-            Tarefas e manutenções deste espaço.
+            O que precisa ser feito neste espaço.
           </p>
         </div>
         <CreateServiceForm
@@ -96,11 +96,11 @@ export function ServicesPanel({
             <BrandMascot width={96} />
           </div>
           <p className="font-medium text-foreground">
-            Nenhum serviço ainda
+            Nenhuma tarefa ainda
           </p>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            Crie o primeiro serviço para organizar rotinas e execuções neste
-            grupo de manutenção.
+            Crie a primeira tarefa para organizar repetições e pendências neste
+            espaço.
           </p>
         </div>
       )}

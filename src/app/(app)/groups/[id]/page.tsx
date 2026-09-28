@@ -14,6 +14,11 @@ import {
   parseActivityPeriod,
 } from "@/lib/activity/filters";
 import {
+  addDaysKey,
+  isInUpcomingWindow,
+  todayKey,
+} from "@/lib/calendar/range";
+import {
   parseCalendarDay,
   parseCalendarMonth,
   parseGroupTab,
@@ -30,6 +35,20 @@ type GroupPageProps = {
     month?: string;
     day?: string;
   }>;
+};
+
+type PendingItem = {
+  id: string;
+  scheduled_date: string;
+  due_date: string;
+  status: "PENDING" | "COMPLETED" | "CANCELLED";
+  notes: string | null;
+  completed_by_display_name: string | null;
+  cancel_reason: string | null;
+  serviceId: string;
+  serviceTitle: string;
+  maintenanceGroupId: string;
+  maintenanceGroupName: string;
 };
 
 export default async function GroupDetailPage({
@@ -130,37 +149,9 @@ export default async function GroupDetailPage({
       .select("id, name, description")
       .eq("user_group_id", id)
       .order("created_at", { ascending: true }),
-    activeTab === "gestao"
+    activeTab === "organizar"
       ? activityQuery
-      : Promise.resolve({ data: [] as Array<{
-          id: string;
-          entity_type:
-            | "USER_GROUP"
-            | "MEMBERSHIP"
-            | "INVITATION"
-            | "MAINTENANCE_GROUP"
-            | "SERVICE"
-            | "ROUTINE"
-            | "EXECUTION";
-          action:
-            | "CREATED"
-            | "UPDATED"
-            | "DELETED"
-            | "COMPLETED"
-            | "RESCHEDULED"
-            | "CANCELLED"
-            | "INVITED"
-            | "INVITE_ACCEPTED"
-            | "INVITE_CANCELLED"
-            | "INVITE_RESENT"
-            | "MEMBER_LEFT"
-            | "MEMBER_REMOVED"
-            | "OWNER_SUCCEEDED"
-            | "ROUTINE_RECALCULATED";
-          actor_display_name: string;
-          metadata: unknown;
-          created_at: string;
-        }> }),
+      : Promise.resolve({ data: [] as never[] }),
   ]);
 
   const memberUserIds = (members ?? []).map((member) => member.user_id);
@@ -177,26 +168,17 @@ export default async function GroupDetailPage({
   );
 
   const memberCount = members?.length ?? 0;
-  const maintenanceGroupIds = (maintenanceGroups ?? []).map((group) => group.id);
+  const maintenanceGroupIds = (maintenanceGroups ?? []).map(
+    (item) => item.id,
+  );
   const maintenanceGroupNameById = new Map(
-    (maintenanceGroups ?? []).map((group) => [group.id, group.name]),
+    (maintenanceGroups ?? []).map((item) => [item.id, item.name]),
   );
 
-  let calendarItems: Array<{
-    id: string;
-    scheduled_date: string;
-    due_date: string;
-    status: "PENDING" | "COMPLETED" | "CANCELLED";
-    notes: string | null;
-    completed_by_display_name: string | null;
-    cancel_reason: string | null;
-    serviceId: string;
-    serviceTitle: string;
-    maintenanceGroupId: string;
-    maintenanceGroupName: string;
-  }> = [];
+  let monthItems: PendingItem[] = [];
+  let upcomingItems: PendingItem[] = [];
 
-  if (activeTab === "calendario" && maintenanceGroupIds.length > 0) {
+  if (activeTab === "pendencias" && maintenanceGroupIds.length > 0) {
     const { data: services } = await supabase
       .from("services")
       .select("id, title, maintenance_group_id")
@@ -208,10 +190,13 @@ export default async function GroupDetailPage({
     );
 
     if (serviceIds.length > 0) {
-      const monthStart = `${calendarMonth}-01`;
+      const today = todayKey();
+      const weekEnd = addDaysKey(today, 6);
       const [year, monthNumber] = calendarMonth.split("-").map(Number);
       const nextMonthDate = new Date(year, monthNumber, 1);
       const monthEndExclusive = `${nextMonthDate.getFullYear()}-${String(nextMonthDate.getMonth() + 1).padStart(2, "0")}-01`;
+      const fetchUntil =
+        weekEnd >= monthEndExclusive ? addDaysKey(weekEnd, 1) : monthEndExclusive;
 
       const { data: pendingExecutions } = await supabase
         .from("service_executions")
@@ -220,12 +205,11 @@ export default async function GroupDetailPage({
         )
         .in("service_id", serviceIds)
         .eq("status", "PENDING")
-        .gte("due_date", monthStart)
-        .lt("due_date", monthEndExclusive)
+        .lt("due_date", fetchUntil)
         .order("due_date", { ascending: true })
         .limit(300);
 
-      calendarItems = (pendingExecutions ?? []).flatMap((execution) => {
+      const mapped = (pendingExecutions ?? []).flatMap((execution) => {
         const service = serviceById.get(execution.service_id);
         if (!service) return [];
         return [
@@ -242,10 +226,17 @@ export default async function GroupDetailPage({
             maintenanceGroupId: service.maintenance_group_id,
             maintenanceGroupName:
               maintenanceGroupNameById.get(service.maintenance_group_id) ??
-              "Manutenção",
-          },
+              "Espaço",
+          } satisfies PendingItem,
         ];
       });
+
+      monthItems = mapped.filter((item) =>
+        item.due_date.startsWith(calendarMonth),
+      );
+      upcomingItems = mapped.filter((item) =>
+        isInUpcomingWindow(item.due_date, 7, today),
+      );
     }
   }
 
@@ -294,12 +285,13 @@ export default async function GroupDetailPage({
         />
       </div>
 
-      {activeTab === "calendario" ? (
+      {activeTab === "pendencias" ? (
         <PendenciesCalendar
           userGroupId={id}
           month={calendarMonth}
           selectedDay={selectedDay}
-          items={calendarItems}
+          monthItems={monthItems}
+          upcomingItems={upcomingItems}
         />
       ) : (
         <>
@@ -309,38 +301,21 @@ export default async function GroupDetailPage({
             isOwner={isOwner}
           />
 
-          <GroupInvitationsPanel
-            userGroupId={id}
-            invitations={invitations ?? []}
-            isOwner={isOwner}
-          />
-
-          <ActivityLogPanel
-            userGroupId={id}
-            logs={(activityLogs ?? []).map((log) => ({
-              ...log,
-              metadata:
-                log.metadata &&
-                typeof log.metadata === "object" &&
-                !Array.isArray(log.metadata)
-                  ? (log.metadata as Record<string, unknown>)
-                  : null,
-            }))}
-            entity={activityEntity}
-            period={activityPeriod}
-          />
-
           <section className="animate-fade-up-delay space-y-3">
-            <div className="flex items-end justify-between gap-3">
-              <div>
-                <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
-                  Membros
-                </h2>
-                <p className="text-sm text-muted-foreground">
-                  Quem participa deste espaço compartilhado.
-                </p>
-              </div>
+            <div>
+              <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
+                Pessoas
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Quem participa e convites pendentes.
+              </p>
             </div>
+
+            <GroupInvitationsPanel
+              userGroupId={id}
+              invitations={invitations ?? []}
+              isOwner={isOwner}
+            />
 
             <div className="overflow-hidden rounded-3xl border border-border bg-white/85">
               {(members ?? []).map((member, index) => {
@@ -387,6 +362,22 @@ export default async function GroupDetailPage({
               })}
             </div>
           </section>
+
+          <ActivityLogPanel
+            userGroupId={id}
+            logs={(activityLogs ?? []).map((log) => ({
+              ...log,
+              metadata:
+                log.metadata &&
+                typeof log.metadata === "object" &&
+                !Array.isArray(log.metadata)
+                  ? (log.metadata as Record<string, unknown>)
+                  : null,
+            }))}
+            entity={activityEntity}
+            period={activityPeriod}
+            collapsed
+          />
         </>
       )}
     </div>

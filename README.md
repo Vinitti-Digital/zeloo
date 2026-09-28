@@ -133,3 +133,4 @@ npm run typecheck
 ### Evoluções pós-roadmap
 
 - [x] Abas no grupo: **Gestão** (CRUD) e **Calendário** (pendências por vencimento)
+- [x] UX pendências primeiro: aba **Pendências** (padrão) + lista 7 dias/atrasadas + calendário; **Organizar** enxuta; histórico recolhido; copy Espaço/Tarefa/Pendência/Repetição

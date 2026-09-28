@@ -66,7 +66,7 @@ export async function completeExecutionAction(
     ),
   );
   revalidatePath(`/groups/${parsed.data.userGroupId}`);
-  return { success: "Execução concluída." };
+  return { success: "Pendência concluída." };
 }
 
 export async function cancelExecutionAction(
@@ -108,7 +108,7 @@ export async function cancelExecutionAction(
     ),
   );
   revalidatePath(`/groups/${parsed.data.userGroupId}`);
-  return { success: "Execução cancelada." };
+  return { success: "Pendência cancelada." };
 }
 
 export async function rescheduleExecutionAction(
@@ -152,5 +152,5 @@ export async function rescheduleExecutionAction(
     ),
   );
   revalidatePath(`/groups/${parsed.data.userGroupId}`);
-  return { success: "Execução reagendada." };
+  return { success: "Pendência reagendada." };
 }

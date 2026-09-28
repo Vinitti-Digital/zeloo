@@ -27,6 +27,7 @@ type ActivityLogPanelProps = {
   logs: ActivityLogItem[];
   entity: ActivityEntityType | "ALL";
   period: ActivityPeriod;
+  collapsed?: boolean;
 };
 
 export function ActivityLogPanel({
@@ -34,18 +35,10 @@ export function ActivityLogPanel({
   logs,
   entity,
   period,
+  collapsed = false,
 }: ActivityLogPanelProps) {
-  return (
-    <section className="animate-fade-up-delay space-y-3">
-      <div>
-        <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
-          Atividades
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          Histórico do que aconteceu neste grupo.
-        </p>
-      </div>
-
+  const content = (
+    <div className="space-y-3">
       <ActivityFilters
         userGroupId={userGroupId}
         entity={entity}
@@ -113,11 +106,48 @@ export function ActivityLogPanel({
             Nenhuma atividade neste filtro
           </p>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            Quando o grupo receber convites, serviços ou execuções, o histórico
+            Quando o grupo receber convites, tarefas ou pendências, o histórico
             aparece aqui.
           </p>
         </div>
       )}
+    </div>
+  );
+
+  if (collapsed) {
+    return (
+      <section className="animate-fade-up-delay">
+        <details className="rounded-3xl border border-border bg-white/85 open:pb-4">
+          <summary className="cursor-pointer list-none px-5 py-4 sm:px-6 [&::-webkit-details-marker]:hidden">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
+                  Histórico
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Atividades recentes do grupo — toque para ver.
+                </p>
+              </div>
+              <Badge variant="outline">Ver histórico</Badge>
+            </div>
+          </summary>
+          <div className="space-y-3 px-5 sm:px-6">{content}</div>
+        </details>
+      </section>
+    );
+  }
+
+  return (
+    <section className="animate-fade-up-delay space-y-3">
+      <div>
+        <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
+          Histórico
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          O que aconteceu neste grupo.
+        </p>
+      </div>
+      {content}
     </section>
   );
 }
