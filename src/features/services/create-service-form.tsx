@@ -50,7 +50,7 @@ export function CreateServiceForm({
     return (
       <Button type="button" onClick={() => setOpen(true)}>
         <Plus data-icon="inline-start" />
-        Novo serviço
+        Nova tarefa
       </Button>
     );
   }
@@ -91,7 +91,7 @@ export function CreateServiceForm({
           <Input
             id="service-description"
             name="description"
-            placeholder="Detalhes do serviço"
+            placeholder="Detalhes da tarefa"
           />
         </div>
 
@@ -171,7 +171,7 @@ export function CreateServiceForm({
             Cancelar
           </Button>
           <Button type="submit" disabled={pending}>
-            {pending ? "Criando..." : "Criar serviço"}
+            {pending ? "Criando..." : "Criar tarefa"}
           </Button>
         </div>
       </form>

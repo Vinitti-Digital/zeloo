@@ -131,7 +131,7 @@ export function MaintenanceGroupItem({
           type="button"
           size="icon-sm"
           variant="ghost"
-          aria-label="Editar grupo de manutenção"
+          aria-label="Editar espaço"
           onClick={() => setEditing(true)}
         >
           <Pencil className="size-4" />
@@ -144,7 +144,7 @@ export function MaintenanceGroupItem({
               type="submit"
               size="icon-sm"
               variant="ghost"
-              aria-label="Excluir grupo de manutenção"
+              aria-label="Excluir espaço"
               disabled={deletePending}
             >
               <Trash2 className="size-4" />

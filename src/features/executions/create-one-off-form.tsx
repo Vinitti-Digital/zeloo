@@ -39,7 +39,7 @@ export function CreateOneOffForm({
     return (
       <Button type="button" variant="outline" className="bg-white" onClick={() => setOpen(true)}>
         <Plus data-icon="inline-start" />
-        Execução avulsa
+        Pendência avulsa
       </Button>
     );
   }
@@ -101,7 +101,7 @@ export function CreateOneOffForm({
             Cancelar
           </Button>
           <Button type="submit" disabled={pending}>
-            {pending ? "Criando..." : "Criar execução"}
+            {pending ? "Criando..." : "Criar pendência"}
           </Button>
         </div>
       </form>

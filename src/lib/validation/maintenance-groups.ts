@@ -2,19 +2,19 @@ import { z } from "zod";
 
 export const createMaintenanceGroupSchema = z.object({
   userGroupId: z.string().uuid("Grupo inválido"),
-  name: z.string().trim().min(2, "O nome do grupo de manutenção é obrigatório"),
+  name: z.string().trim().min(2, "O nome do espaço é obrigatório"),
   description: z.string().trim().optional(),
 });
 
 export const updateMaintenanceGroupSchema = z.object({
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
   userGroupId: z.string().uuid("Grupo inválido"),
-  name: z.string().trim().min(2, "O nome do grupo de manutenção é obrigatório"),
+  name: z.string().trim().min(2, "O nome do espaço é obrigatório"),
   description: z.string().trim().optional(),
 });
 
 export const deleteMaintenanceGroupSchema = z.object({
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
   userGroupId: z.string().uuid("Grupo inválido"),
 });
 

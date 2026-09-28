@@ -36,7 +36,7 @@ export function CreateMaintenanceGroupForm({
     return (
       <Button type="button" onClick={() => setOpen(true)}>
         <Plus data-icon="inline-start" />
-        Novo grupo de manutenção
+        Novo espaço
       </Button>
     );
   }

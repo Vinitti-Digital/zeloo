@@ -45,7 +45,7 @@ export async function createMaintenanceGroupAction(
   }
 
   revalidatePath(`/groups/${parsed.data.userGroupId}`);
-  return { success: "Grupo de manutenção criado." };
+  return { success: "Espaço criado." };
 }
 
 export async function updateMaintenanceGroupAction(
@@ -83,7 +83,7 @@ export async function updateMaintenanceGroupAction(
   }
 
   revalidatePath(`/groups/${parsed.data.userGroupId}`);
-  return { success: "Grupo de manutenção atualizado." };
+  return { success: "Espaço atualizado." };
 }
 
 export async function deleteMaintenanceGroupAction(
@@ -117,5 +117,5 @@ export async function deleteMaintenanceGroupAction(
   }
 
   revalidatePath(`/groups/${parsed.data.userGroupId}`);
-  return { success: "Grupo de manutenção excluído." };
+  return { success: "Espaço excluído." };
 }

@@ -1,7 +1,8 @@
-export type GroupTab = "gestao" | "calendario";
+export type GroupTab = "pendencias" | "organizar";
 
 export function parseGroupTab(value: string | undefined): GroupTab {
-  return value === "calendario" ? "calendario" : "gestao";
+  if (value === "organizar" || value === "gestao") return "organizar";
+  return "pendencias";
 }
 
 export function parseCalendarMonth(value: string | undefined): string {

@@ -24,10 +24,10 @@ export function MaintenanceGroupsPanel({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
-            Grupos de manutenção
+            Espaços
           </h2>
           <p className="text-sm text-muted-foreground">
-            Organize espaços ou áreas onde os serviços vão viver.
+            Ambientes da casa onde as tarefas vivem.
           </p>
         </div>
         <CreateMaintenanceGroupForm userGroupId={userGroupId} />
@@ -56,11 +56,10 @@ export function MaintenanceGroupsPanel({
             <BrandMascot width={96} />
           </div>
           <p className="font-medium text-foreground">
-            Nenhum grupo de manutenção ainda
+            Nenhum espaço ainda
           </p>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            Crie o primeiro para começar a organizar serviços e rotinas neste
-            espaço.
+            Crie o primeiro para organizar tarefas e repetições neste grupo.
           </p>
         </div>
       )}

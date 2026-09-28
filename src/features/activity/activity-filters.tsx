@@ -43,6 +43,7 @@ export function ActivityFilters({
       method="get"
       className="flex flex-col gap-3 rounded-2xl border border-border/80 bg-[#FFFDF8] p-3 sm:flex-row sm:items-end"
     >
+      <input type="hidden" name="tab" value="organizar" />
       <div className="min-w-0 flex-1 space-y-1.5">
         <Label htmlFor="activity-entity">Tipo</Label>
         <select
@@ -83,7 +84,7 @@ export function ActivityFilters({
         </Button>
         {entity !== "ALL" || period !== "30d" ? (
           <Link
-            href={`/groups/${userGroupId}`}
+            href={`/groups/${userGroupId}?tab=organizar`}
             className={cn(
               buttonVariants({ variant: "outline" }),
               "flex-1 bg-white sm:flex-none",

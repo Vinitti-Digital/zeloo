@@ -88,7 +88,7 @@ export async function createRoutineAction(
       parsed.data.serviceId,
     ),
   );
-  return { success: "Rotina criada e execuções geradas." };
+  return { success: "Repetição criada e pendências geradas." };
 }
 
 export async function updateRoutineAction(
@@ -144,7 +144,7 @@ export async function updateRoutineAction(
       parsed.data.serviceId,
     ),
   );
-  return { success: "Rotina atualizada e execuções recalculadas." };
+  return { success: "Repetição atualizada e pendências recalculadas." };
 }
 
 export async function deleteRoutineAction(
@@ -183,7 +183,7 @@ export async function deleteRoutineAction(
       parsed.data.serviceId,
     ),
   );
-  return { success: "Rotina excluída." };
+  return { success: "Repetição excluída." };
 }
 
 export async function recalculateRoutineAction(

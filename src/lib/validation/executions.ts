@@ -2,9 +2,9 @@ import { z } from "zod";
 
 const pathIds = {
   userGroupId: z.string().uuid("Grupo inválido"),
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
-  serviceId: z.string().uuid("Serviço inválido"),
-  executionId: z.string().uuid("Execução inválida"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
+  serviceId: z.string().uuid("Tarefa inválida"),
+  executionId: z.string().uuid("Pendência inválida"),
 };
 
 export const completeExecutionSchema = z.object({

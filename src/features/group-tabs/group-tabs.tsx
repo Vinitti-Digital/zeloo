@@ -15,10 +15,10 @@ export function GroupTabs({
   activeTab,
   calendarMonth,
 }: GroupTabsProps) {
-  const gestaoHref = `/groups/${userGroupId}`;
-  const calendarioHref = calendarMonth
-    ? `/groups/${userGroupId}?tab=calendario&month=${calendarMonth}`
-    : `/groups/${userGroupId}?tab=calendario`;
+  const pendenciasHref = calendarMonth
+    ? `/groups/${userGroupId}?tab=pendencias&month=${calendarMonth}`
+    : `/groups/${userGroupId}`;
+  const organizarHref = `/groups/${userGroupId}?tab=organizar`;
 
   return (
     <nav
@@ -26,28 +26,28 @@ export function GroupTabs({
       className="grid grid-cols-2 gap-1 rounded-2xl border border-border bg-[#FFFDF8] p-1"
     >
       <Link
-        href={gestaoHref}
+        href={pendenciasHref}
         className={cn(
           "inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-          activeTab === "gestao"
-            ? "bg-primary text-primary-foreground shadow-sm"
-            : "text-muted-foreground hover:bg-white hover:text-foreground",
-        )}
-      >
-        <Settings2 className="size-4" aria-hidden />
-        Gestão
-      </Link>
-      <Link
-        href={calendarioHref}
-        className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-          activeTab === "calendario"
+          activeTab === "pendencias"
             ? "bg-primary text-primary-foreground shadow-sm"
             : "text-muted-foreground hover:bg-white hover:text-foreground",
         )}
       >
         <CalendarDays className="size-4" aria-hidden />
-        Calendário
+        Pendências
+      </Link>
+      <Link
+        href={organizarHref}
+        className={cn(
+          "inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+          activeTab === "organizar"
+            ? "bg-primary text-primary-foreground shadow-sm"
+            : "text-muted-foreground hover:bg-white hover:text-foreground",
+        )}
+      >
+        <Settings2 className="size-4" aria-hidden />
+        Organizar
       </Link>
     </nav>
   );

@@ -77,7 +77,7 @@ export async function createServiceAction(
   if (error || !data) {
     return {
       error: translateDomainError(
-        error?.message ?? "Não foi possível criar o serviço",
+        error?.message ?? "Não foi possível criar a tarefa",
       ),
     };
   }
@@ -153,7 +153,7 @@ export async function updateServiceAction(
       parsed.data.serviceId,
     ),
   );
-  return { success: "Serviço atualizado." };
+  return { success: "Tarefa atualizada." };
 }
 
 export async function deleteServiceAction(
@@ -231,5 +231,5 @@ export async function createOneOffExecutionAction(
       parsed.data.serviceId,
     ),
   );
-  return { success: "Execução avulsa criada." };
+  return { success: "Pendência avulsa criada." };
 }

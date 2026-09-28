@@ -67,10 +67,10 @@ export function ServiceEditForm({
     <div className="space-y-4 rounded-3xl border border-border bg-white/85 p-5 sm:p-6">
       <div>
         <h2 className="font-[family-name:var(--font-display)] text-2xl text-foreground">
-          Serviço
+          Tarefa
         </h2>
         <p className="text-sm text-muted-foreground">
-          Edite os dados deste serviço de manutenção.
+          Edite os dados desta tarefa.
         </p>
       </div>
 
@@ -239,7 +239,7 @@ export function ServiceEditForm({
             className="border-destructive/30 text-destructive hover:bg-destructive/10"
             disabled={deletePending}
           >
-            {deletePending ? "Excluindo..." : "Excluir serviço"}
+            {deletePending ? "Excluindo..." : "Excluir tarefa"}
           </Button>
         </form>
       ) : null}

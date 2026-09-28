@@ -4,9 +4,9 @@ const prioritySchema = z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).optional();
 const statusSchema = z.enum(["ACTIVE", "COMPLETED"]);
 
 export const createServiceSchema = z.object({
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
   userGroupId: z.string().uuid("Grupo inválido"),
-  title: z.string().trim().min(2, "O título do serviço é obrigatório"),
+  title: z.string().trim().min(2, "O título da tarefa é obrigatório"),
   description: z.string().trim().optional(),
   priority: prioritySchema.or(z.literal("")),
   responsibleUserId: z
@@ -20,20 +20,20 @@ export const createServiceSchema = z.object({
 });
 
 export const updateServiceSchema = createServiceSchema.extend({
-  serviceId: z.string().uuid("Serviço inválido"),
+  serviceId: z.string().uuid("Tarefa inválida"),
   status: statusSchema,
 });
 
 export const deleteServiceSchema = z.object({
-  serviceId: z.string().uuid("Serviço inválido"),
+  serviceId: z.string().uuid("Tarefa inválida"),
   userGroupId: z.string().uuid("Grupo inválido"),
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
 });
 
 export const createOneOffExecutionSchema = z.object({
-  serviceId: z.string().uuid("Serviço inválido"),
+  serviceId: z.string().uuid("Tarefa inválida"),
   userGroupId: z.string().uuid("Grupo inválido"),
-  maintenanceGroupId: z.string().uuid("Grupo de manutenção inválido"),
+  maintenanceGroupId: z.string().uuid("espaço inválido"),
   dueDate: z.string().min(1, "Informe a data"),
   notes: z.string().trim().optional(),
 });
